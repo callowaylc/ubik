@@ -1,0 +1,6 @@
+{
+    "require": {
+        //"monolog/monolog": "1.0.*"
+			 "react/react": "0.3.*"
+    }
+}
