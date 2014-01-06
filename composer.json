@@ -1,12 +1,10 @@
 {
-	  "repositories": [
-        { "type": "vcs", "url": "https://github.com/callowaylc/punicorn" }
-    ], 
+
     "require": {
         //"monolog/monolog": "1.0.*"
 			 "react/react": "0.3.*"
     },
     "autoload": {
-    	"psr-0": {"PUnicorn\\": "lib"}
+    	"psr-0": {"PUnicorn": "lib/"}
     }
 }
