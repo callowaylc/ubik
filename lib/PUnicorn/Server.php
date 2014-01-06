@@ -7,9 +7,13 @@ namespace PUnicorn;
 class Server { 
 
 	function __static() {
-		$loop   = React\EventLoop\Factory::create();
-		$socket = new React\Socket\Server($loop);
-		$http   = new React\Http\Server($socket);		
+		$loop   = \React\EventLoop\Factory::create();
+		$socket = new \React\Socket\Server($loop);
+		$http   = new \React\Http\Server($socket);	
+
+		// @TODO get port from configuration
+		//$socket->listen()
+
 	}
 }
 
