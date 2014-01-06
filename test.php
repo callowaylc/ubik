@@ -9,6 +9,7 @@ $app = function ($request, $response) use (&$i) {
     $pid = getmypid();
 
     $text = "This is request number $i for #$pid.\n";
+    $text = var_export($response, true);
     $headers = array('Content-Type' => 'text/plain');
 
     $response->writeHead(200, $headers);
