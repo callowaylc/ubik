@@ -1,7 +1,12 @@
 <?php
 
+set_include_path(
+	get_include_path() . ':/' . __DIR__ . '/lib'
+);
 require_once 'vendor/autoload.php';
+new \PUnicorn\Server;
 
+exit('here');
 $i = 0;
 
 $app = function ($request, $response) use (&$i) {
