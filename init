@@ -1,10 +1,27 @@
+#!/usr/bin/php
 <?php
 
+// CONSTANTS ////////////////////////////////////////////////////////
+
+// REQUIRES  ////////////////////////////////////////////////////////
+
 require_once 'vendor/autoload.php';
-new \PUnicorn\Server;
-echo getenv('PUNICORN_HOME');
-exit('here');
-$i = 0;
+
+// MAIN      ////////////////////////////////////////////////////////
+
+// evaluate command line arguments
+$flags = new donatj\Flags();
+
+$sponges = & $flags->bool('foo', false, 'Enable the foo');
+$what    = & $flags->uint('bar', 10, 'Number of bars');
+$cat     = & $flags->string('baz', 'Fred', 'What to name the baz');
+$verbose = & $flags->short('v', 'verbosity');
+
+try {
+    $flags->parse();
+} catch(Exception $e) {
+    die($e->getMessage() . PHP_EOL . $flags->getDefaults() . PHP_EOL );
+}
 
 $app = function ($request, $response) use (&$i) {
     $i++;

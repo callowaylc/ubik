@@ -5,16 +5,15 @@ namespace PUnicorn\Util;
 interface SingletonTrait {
 
 	public static function singleton() {
-		if (is_null(static::$_singleton)) { 
+		if (is_null($instance = static::$_singleton)) { 
 			// instantiate with dynamic argument set
 			$args = func_get_args();
 
 			$reflection = new \ReflectionClass(get_called_class());
-			return $reflection->newInstanceArgs($args);
-
+			$instance   = $reflection->newInstanceArgs($args);
 		}
 
-		return static::$_singleton;
+		return $instance;
 	}	
 
 	protected static $_singleton;
