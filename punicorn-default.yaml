@@ -1,8 +1,0 @@
-# specify conf directives 
-host: localhost
-port: 80
-child:
-	threshold:
-		memory:   100
-		cpu:      100
-		response: 20s
