@@ -3,8 +3,57 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "2579d4100fa4b7b092cad40de66a1657",
+    "hash": "6cd293db92beab474e7194c7cc82cff6",
     "packages": [
+        {
+            "name": "donatj/flags",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/donatj/Flags.git",
+                "reference": "fb7d86770d17d4e1040d513daff5dee81ee90cb9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/donatj/Flags/zipball/fb7d86770d17d4e1040d513daff5dee81ee90cb9",
+                "reference": "fb7d86770d17d4e1040d513daff5dee81ee90cb9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "donatj/drop": "*",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "donatj": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jesse Donat",
+                    "email": "donatj@gmail.com",
+                    "homepage": "http://donatstudios.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "GNU-style PHP command line argument parser",
+            "keywords": [
+                "arguments",
+                "cli",
+                "flags",
+                "gnu-style",
+                "options"
+            ],
+            "time": "2014-01-03 23:56:27"
+        },
         {
             "name": "evenement/evenement",
             "version": "v1.0.0",
@@ -196,9 +245,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "donatj/flags": 20
+    },
     "platform": [
 
     ],

@@ -10,7 +10,6 @@ class Configuration {
 		// read yaml and go 
 		
 	}
-}
 
-// @TODO move to autoloader?
-Configuration::__static();
+
+}
