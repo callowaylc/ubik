@@ -20,13 +20,17 @@ $arguments = Util\Flag::parse(function($f) {
 
 // evaluate configuration 
 try { 
-	$configuration = Configuration::singleton($arguments['config']);
+	Configuration::evaluate($arguments['config']);
 
 } catch(\Exception $e) {
-	throws();
+	// @TODO add meaningful message
+	throws(null);
 } 
 
-throws();
+// now that we have configuration set, we need to create
+// instance of server, which will be response for kicking
+// off master/worker processes
+
 
 $app = function ($request, $response) use (&$i) {
     $i++;

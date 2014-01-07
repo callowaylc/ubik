@@ -6,18 +6,20 @@ namespace PUnicorn;
  **/
 class Server { 
 
-	function __static() {
+
+	/** Uhh, starts the server */
+	public static function start() {
+		// retrieve singleton instance of configuration
+		$configuration = Configuration::singleton();
+
+		// create react loop and socket instances, which will
+		// be used for pull connectivity and reactor pattern,
+		// respectively
 		$loop   = \React\EventLoop\Factory::create();
 		$socket = new \React\Socket\Server($loop);
 		$http   = new \React\Http\Server($socket);	
 
-		// @TODO get port from configuration
-		//$socket->listen()
+		// 
 
 	}
 }
-
-// I dont really like doing this; but the choice is to do an explicit
-// call on __static or modify composer autoloader, which would present
-// a whole lotta fun fucking times
-Server::__static();

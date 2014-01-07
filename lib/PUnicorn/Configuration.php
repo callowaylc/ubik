@@ -6,6 +6,17 @@ class Configuration {
 
 	use Util\SingletonTrait;
 
+	/** Responsible for evaluating configuration file and
+	 ** reporting (throwing exceptions) in the case of 
+	 ** failure; this method along with singleton are meant
+	 ** to be the ONLY public facing interface to configuration
+	 **/
+	public static function evaluate($file) {
+		// @TODO obviously need to do more checks for
+		// proper eval on configuration
+		static::singleton($file)
+	}
+
 	/** Takes an external dsl and wraps within lambda; 
 	 ** this way, dsl can resember a conventional config
 	 ** file, but at its heart is truly php
