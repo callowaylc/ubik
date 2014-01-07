@@ -1,9 +1,9 @@
 #!/usr/bin/php
 <?php
+namespace PUnicorn;
 
 // USES      ////////////////////////////////////////////////////////
-use \PUnicorn;
-use \PUnicorn\Util;
+
 
 // CONSTANTS ////////////////////////////////////////////////////////
 
@@ -19,14 +19,14 @@ $arguments = Util\Flag::parse(function($f) {
 });
 
 // evaluate configuration 
-$configuration = PUnicorn\Configuration::singleton($arguments['config']);
-echo $configuration->listen;
-exit;
+try { 
+	$configuration = Configuration::singleton($arguments['config']);
 
+} catch(\Exception $e) {
+	throws();
+} 
 
-
-
-
+throws();
 
 $app = function ($request, $response) use (&$i) {
     $i++;
