@@ -48,7 +48,13 @@ class Configuration {
 
 	/** Used to retrieve values specified in config */
 	public function __get($name) {
-		return $this->config[$name];
+		if (isset($this->config[$name])) {
+			return $this->config[$name];
+		}
+
+		throws(
+			"Failed to retrieve '$name' configuration option"
+		);
 	}
 
 	public function before_fork(callable $lambda) {

@@ -19,7 +19,18 @@ class Server {
 		$socket = new \React\Socket\Server($loop);
 		$http   = new \React\Http\Server($socket);	
 
-		// 
+		// bind socket to port/sock-file determined in 
+		// conf
+		$socket->listen($configuration->listen);
 
+		// now start master process
+		try { 
+			$process = Process\Master::run($loop)
+
+		} catch(\Exception $e) {
+			throws($e);
+
+
+		}
 	}
 }
