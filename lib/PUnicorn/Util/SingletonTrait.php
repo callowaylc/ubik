@@ -2,7 +2,7 @@
 namespace PUnicorn\Util;
 
 /** Provides simple singleton functionality to implementing classes */
-interface SingletonTrait {
+trait SingletonTrait {
 
 	public static function singleton() {
 		if (is_null($instance = static::$_singleton)) { 

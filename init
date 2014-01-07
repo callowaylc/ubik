@@ -2,6 +2,7 @@
 <?php
 
 // USES      ////////////////////////////////////////////////////////
+use \PUnicorn;
 use \PUnicorn\Util;
 
 // CONSTANTS ////////////////////////////////////////////////////////
@@ -13,11 +14,17 @@ require_once 'vendor/autoload.php';
 // MAIN      ////////////////////////////////////////////////////////
 
 // evaluate command line arguments
-$arguments = \PUnicorn\Util\Flag::parse(function($f) {
+$arguments = Util\Flag::parse(function($f) {
 	$f->string('config', 'Path to configuration file');
 });
 
-// if configuration is present, then evaluate
+// evaluate configuration 
+$configuration = PUnicorn\Configuration::singleton($arguments['config']);
+echo $configuration->listen;
+exit;
+
+
+
 
 
 
