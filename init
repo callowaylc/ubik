@@ -1,6 +1,9 @@
 #!/usr/bin/php
 <?php
 
+// USES      ////////////////////////////////////////////////////////
+use \PUnicorn\Util;
+
 // CONSTANTS ////////////////////////////////////////////////////////
 
 // REQUIRES  ////////////////////////////////////////////////////////
@@ -10,18 +13,13 @@ require_once 'vendor/autoload.php';
 // MAIN      ////////////////////////////////////////////////////////
 
 // evaluate command line arguments
-$flags = new donatj\Flags();
+$arguments = \PUnicorn\Util\Flag::parse(function($f) {
+	$f->string('config', 'Path to configuration file');
+});
 
-$sponges = & $flags->bool('foo', false, 'Enable the foo');
-$what    = & $flags->uint('bar', 10, 'Number of bars');
-$cat     = & $flags->string('baz', 'Fred', 'What to name the baz');
-$verbose = & $flags->short('v', 'verbosity');
+// if configuration is present, then evaluate
 
-try {
-    $flags->parse();
-} catch(Exception $e) {
-    die($e->getMessage() . PHP_EOL . $flags->getDefaults() . PHP_EOL );
-}
+
 
 $app = function ($request, $response) use (&$i) {
     $i++;
