@@ -30,6 +30,8 @@ try {
 // now that we have configuration set, we need to create
 // instance of server, which will be response for kicking
 // off master/worker processes
+Server::start();
+exit;
 
 
 $app = function ($request, $response) use (&$i) {

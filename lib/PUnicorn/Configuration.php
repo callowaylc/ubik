@@ -14,7 +14,7 @@ class Configuration {
 	public static function evaluate($file) {
 		// @TODO obviously need to do more checks for
 		// proper eval on configuration
-		static::singleton($file)
+		return static::singleton($file);
 	}
 
 	/** Takes an external dsl and wraps within lambda; 
@@ -34,8 +34,7 @@ class Configuration {
 
 		// bind to this instance and then call
 		$lambda->bindTo($this);
-		$lambda();         
-
+		$lambda();
 
 		// read contents to buffer and split into newlines
 		//$lines = preg_split('\n', file_get_contents($file));

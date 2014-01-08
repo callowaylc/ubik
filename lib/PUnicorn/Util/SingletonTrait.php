@@ -5,7 +5,7 @@ namespace PUnicorn\Util;
 trait SingletonTrait {
 
 	public static function singleton() {
-		if (is_null($instance = static::$_singleton)) { 
+		if (is_null($instance = &static::$_singleton)) { 
 			// instantiate with dynamic argument set
 			$args = func_get_args();
 

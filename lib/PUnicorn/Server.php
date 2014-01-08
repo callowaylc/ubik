@@ -6,7 +6,6 @@ namespace PUnicorn;
  **/
 class Server { 
 
-
 	/** Uhh, starts the server */
 	public static function start() {
 		// retrieve singleton instance of configuration
@@ -25,12 +24,22 @@ class Server {
 
 		// now start master process
 		try { 
-			$process = Process\Master::run($loop)
+			$process = Process\Master::run(function() 
+				use ($loop, $configuration) {
+
+				$loop->addPeriodTimer($configuration->health_check_interval, function($timer) {
+					$this->check_workers();
+				});
+			});
 
 		} catch(\Exception $e) {
 			throws($e);
-
-
 		}
+
+		$loop->run();
+	}
+
+	public static function stop() {
+		// @PASS 
 	}
 }
