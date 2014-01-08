@@ -7,7 +7,15 @@ namespace PUnicorn;
 class Server { 
 
 	/** Uhh, starts the server */
-	public static function start() {
+	public function start() {
+
+		// @WTFPHP FUCKING PHP! lambdas can't be defined within
+		// static scope though this method has to be static according
+		// to interfae, so the the below is necessary to do so
+		if (!isset($this)) {
+			return (new static)->start();
+		}
+
 		// retrieve singleton instance of configuration
 		$configuration = Configuration::singleton();
 
@@ -27,7 +35,7 @@ class Server {
 			$process = Process\Master::run(function() 
 				use ($loop, $configuration) {
 
-				$loop->addPeriodTimer($configuration->health_check_interval, function($timer) {
+				$loop->addPeriodicTimer(5, function($timer) {
 					$this->check_workers();
 				});
 			});

@@ -14,7 +14,7 @@ class Master extends AbstractProcess {
 		// if lambda is available, bind to process instance
 		// and run
 		if (!is_null($lambda)) {
-			$lambda->bindTo($process);
+			$lambda = $lambda->bindTo($process);
 			$lambda();
 		}
 
@@ -22,7 +22,7 @@ class Master extends AbstractProcess {
 		return $process;
 	}
 
-	protected function check_workers() {
+	public function check_workers() {
 		echo "checking workers";
 	}
 
