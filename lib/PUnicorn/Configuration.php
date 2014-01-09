@@ -42,7 +42,14 @@ class Configuration {
 
 	/** Used as setter in dsl */
 	public function __call($name, $argument) {
-		$this->config[$name] = array_pop($argument);
+		$argument = array_pop($argument);
+
+		// make sure to cast to integer/float if numeric argument
+		// @TODO need to study cost of using float as numeric type
+		is_numeric($argument) && $argument = (float)$argument;
+
+		// finally assign argument
+		$this->config[$name] = $argument;
 	}
 
 	/** Used to retrieve values specified in config */

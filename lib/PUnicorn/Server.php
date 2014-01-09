@@ -36,12 +36,13 @@ class Server {
 				use ($loop, $http, $configuration) {
 				
 				// define generic handler for http request
-				for ($counter = 0; $counter < $configuration->worker_processes; $counter++) {			
+				for ($counter = 0; $counter < (int)$configuration->worker_processes; $counter++) {			
 					// fork our process and define a motherfucking handler for request on worker
 					// process
 					$master->fork(function($worker) use ($http) {
 						// define handler for request
 						$http->on('request', function($request, $response) use ($worker) {
+							echo "on request";
 							$worker->service($request, $response);
 						});
 
@@ -52,7 +53,7 @@ class Server {
 				}
 
 				// add a periodic timer to check worker health
-				$loop->addPeriodicTimer($configuration->health_check_interval, function($timer) {
+				$loop->addPeriodicTimer($configuration->health_check_interval, function($timer) use ($master) {
 					$master->check_workers();
 				});	
 
