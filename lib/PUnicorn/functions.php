@@ -18,14 +18,22 @@ function throws($exception = null) {
 	throw $exception;
 }
 
+/** The purpose of this function is to execute lambda within 
+ ** child context 
+ **/
 function fork(callable $lambda) {
 	$pid = pcntl_fork();
-	if ($pid == -1) {
-	     die('could not fork');
-	} else if ($pid) {
-	     // we are the parent
-	     pcntl_wait($status); //Protect against Zombie children
-	} else {
-	     // we are the child
+	
+	// we are the child; execute/call lambda
+	if (is_null($pid)) {
+		$lambda();
+	
+	// we have failed to fork
+	} else if ($pid == -1) {
+	 throws('Failed to fu.. fork.. to much whiskey?');
+
 	}
+
+	// return process id regardless of context
+	return $pid;
 }

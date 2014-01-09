@@ -9,8 +9,6 @@ class Master extends AbstractProcess {
 		// create a new instance of self
 		$process = new static;
 
-		// fork process
-
 		// if lambda is available, bind to process instance
 		// and run
 		if (!is_null($lambda)) {
@@ -31,7 +29,12 @@ class Master extends AbstractProcess {
 	 ** child context 
 	 **/
 	protected function fork(callable $lambda) {
-		// responsible for managing forking of current
-		// process
+		$process = new Worker;
+
+		$this->pids[] = PUnicorn\fork(function() use ($process, $lambda) {
+			$lambda($process);
+		});
 	}
+
+	private $pids = [ ]; // forked process ids
 }

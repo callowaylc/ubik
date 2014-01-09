@@ -11,8 +11,11 @@ $app = function ($request, $response) use (&$i) {
     $text = "This is request number $i from process #$pid.\n";
     $headers = array('Content-Type' => 'text/plain');
 
-    $response->writeHead(200, $headers);
+    //$response->writeHead(200, $headers);
     $response->end($text);
+    $response->writeHead(404, $headers);
+
+    echo "hello";
 };
 
 $loop = React\EventLoop\Factory::create();
