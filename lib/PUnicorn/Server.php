@@ -32,26 +32,32 @@ class Server {
 
 		// now start master process
 		try { 
-			$process = Process\Master::run(function($process) 
+			$process = Process\Master::run(function($master) 
 				use ($loop, $http, $configuration) {
 				
-				// add a periodic timer to check worker health
-				$loop->addPeriodicTimer($configuration->health_check_interval, function($timer) {
-					$process->check_workers();
-				});
-
 				// define generic handler for http request
-				for ($counter = 0; $counter < $configuration->worker_processes; $counter++) {
-					
+				for ($counter = 0; $counter < $configuration->worker_processes; $counter++) {			
 					// fork our process and define a motherfucking handler for request on worker
 					// process
-					$process->fork(function($worker) use ($http) {
-						$http->on('request', function($request, $response) {
-							$this->service($request, $response);
+					$master->fork(function($worker) use ($http) {
+						// define handler for request
+						$http->on('request', function($request, $response) use ($worker) {
+							$worker->service($request, $response);
 						});
 
+						// run loop in child context - this will effectively halt child
+						// process run
+						$loop->run();
 					});
 				}
+
+				// add a periodic timer to check worker health
+				$loop->addPeriodicTimer($configuration->health_check_interval, function($timer) {
+					$master->check_workers();
+				});	
+
+				// finally run loop as master
+				$loop->run();			
 
 			});
 

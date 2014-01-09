@@ -9,5 +9,5 @@ abstract class AbstractProcess {
 	 ** enough between proceses that it will be necessary to
 	 ** determine at runtime 
 	 **/
-	abstract public static function run(callable $lambda = null);
+	//abstract public static function run(callable $lambda = null);
 }

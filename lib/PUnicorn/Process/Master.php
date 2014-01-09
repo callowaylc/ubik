@@ -1,5 +1,6 @@
 <?php /** @author Christian Calloway callowaylc@gmail */
 namespace PUnicorn\Process;
+use \PUnicorn;
 
 /** Represents the punicorn master process
  **/
@@ -28,7 +29,7 @@ class Master extends AbstractProcess {
 	/** Forks master to worker process and calls lambda within
 	 ** child context 
 	 **/
-	protected function fork(callable $lambda) {
+	public function fork(callable $lambda) {
 		$process = new Worker;
 
 		$this->pids[] = PUnicorn\fork(function() use ($process, $lambda) {
