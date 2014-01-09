@@ -3,6 +3,6 @@ namespace PUnicorn\Process;
 
 /** Represents a punicorn child process
  **/
-class Child extends AbstractProcess { 
+class Worker extends AbstractProcess { 
 
 }

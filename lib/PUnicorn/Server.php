@@ -32,13 +32,30 @@ class Server {
 
 		// now start master process
 		try { 
-			$process = Process\Master::run(function() 
-				use ($loop, $configuration) {
-
-				$loop->addPeriodicTimer(5, function($timer) {
-					$this->check_workers();
+			$process = Process\Master::run(function($process) 
+				use ($loop, $http, $configuration) {
+				
+				// add a periodic timer to check worker health
+				$loop->addPeriodicTimer($configuration->health_check_interval, function($timer) {
+					$process->check_workers();
 				});
+
+				// define generic handler for http request
+				for ($counter = 0; $counter < $configuration->worker_processes; $counter++) {
+					
+					// fork our process and define a motherfucking handler for request on worker
+					// process
+					$process->fork(function($worker) use ($http) {
+						$http->on('request', function($request, $response) {
+							$this->service($request, $response);
+						});
+
+					});
+				}
+
 			});
+
+			// 
 
 		} catch(\Exception $e) {
 			throws($e);

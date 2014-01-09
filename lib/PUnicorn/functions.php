@@ -17,3 +17,15 @@ function throws($exception = null) {
 
 	throw $exception;
 }
+
+function fork(callable $lambda) {
+	$pid = pcntl_fork();
+	if ($pid == -1) {
+	     die('could not fork');
+	} else if ($pid) {
+	     // we are the parent
+	     pcntl_wait($status); //Protect against Zombie children
+	} else {
+	     // we are the child
+	}
+}

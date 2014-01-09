@@ -15,18 +15,22 @@ class Master extends AbstractProcess {
 		// and run
 		if (!is_null($lambda)) {
 			$lambda = $lambda->bindTo($process);
-			$lambda();
+			$lambda($process);
 		}
 
 		// finally return process
 		return $process;
 	}
 
+	/** Checks worker health */
 	public function check_workers() {
 		echo "checking workers";
 	}
 
-	private function fork() {
+	/** Forks master to worker process and calls lambda within
+	 ** child context 
+	 **/
+	protected function fork(callable $lambda) {
 		// responsible for managing forking of current
 		// process
 	}
