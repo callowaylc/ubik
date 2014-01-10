@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/php-cgi -q
 <?php
 namespace PUnicorn;
 
@@ -14,13 +14,14 @@ require_once 'vendor/autoload.php';
 // MAIN      ////////////////////////////////////////////////////////
 
 // evaluate command line arguments
-$arguments = Util\Flag::parse(function($f) {
-	$f->string('config', 'Path to configuration file');
-});
+// @TODO this doesnt work in php-cgi environment
+//$arguments = Util\Flag::parse(function($f) {
+//	$f->string('config', 'Path to configuration file');
+//});
 
 // evaluate configuration 
 try { 
-	Configuration::evaluate($arguments['config']);
+	Configuration::evaluate($_REQUEST['config']);
 
 } catch(\Exception $e) {
 	// @TODO add meaningful message
@@ -31,41 +32,3 @@ try {
 // instance of server, which will be response for kicking
 // off master/worker processes
 Server::start();
-exit;
-
-
-$app = function ($request, $response) use (&$i) {
-    $i++;
-    $pid = getmypid();
-
-    $text = "This is request number $i for #$pid.\n";
-    $text = var_export($response, true);
-    $headers = array('Content-Type' => 'text/plain');
-
-    $response->writeHead(200, $headers);
-    $response->end($text);
-};
-
-
-
-
-$http->on('request', $app);
-
-$socket->listen(1337);
-
-// lets try multiple children
-for ($counter = 0; $counter < 5; $counter++) { 
-	$pid = pcntl_fork();
-
-	if ($pid == -1) {
-	     die('could not fork');
-	} else if ($pid) {
-	     // we are the parent
-	     //pcntl_wait($status); //Protect against Zombie children
-
-		//$loop->run();
-	} else {
-	     // we are the child
-		$loop->run();
-	}
-}

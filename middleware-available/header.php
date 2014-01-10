@@ -28,7 +28,7 @@ return function($request, $response = null) {
 		foreach(headers_list() as $header) {
 			// since header is sent back as single string, we will need to tokenize
 			// the result
-			list($name, $value) = str_split(':', $header);
+			list($name, $value) = explode(':', $header);
 
 			$headers[$name] = $value;
 		}

@@ -46,14 +46,15 @@ class Worker extends AbstractProcess {
 		// @TODO
 		$body = "suckit";
 
+		// signal our response code 
+		header('Test-Test:123');		
+
 		// now reverse middleware and filter response through
 		foreach(array_reverse($middleware) as $lambda) {
 			$lambda($request, $response);
 		}
 
-		// signal our response code 
-		header('Content-Type:123');
-		var_export(headers_list());
+
 
 		$response->writeHead(http_response_code(), [
 			'Content-Type'   =>  'text/html',
