@@ -42,12 +42,15 @@ class Worker extends AbstractProcess {
 			$lambda($request);
 		}
 
-		// run application
-		// @TODO
-		$body = "suckit";
+		// run application which involves ensuring we are root
+		// path and requring file as described in request path
+		chdir($configuration->root);
 
-		// signal our response code 
-		header('Test-Test:123');		
+		ob_start();
+		require $request->getPath();
+		$content = ob_get_clean();
+
+		// signal our response code
 
 		// now reverse middleware and filter response through
 		foreach(array_reverse($middleware) as $lambda) {
@@ -61,7 +64,7 @@ class Worker extends AbstractProcess {
 			'Worker-Process' =>  getmypid(),
 			'Memory-Usage'   => memory_get_usage()
 		]);
-		$response->write($body);
+		$response->write($content);
 
 		// finally signal end of response
 		$response->end(); 
