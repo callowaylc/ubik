@@ -17,7 +17,6 @@ class Response extends Util\Delegator {
   		$this->headers = array_merge($this->headers, $headers);
   	
   	} else { 
-
   		$headers = array_merge($this->headers, $headers);
 
 	    if ($this->headWritten) {

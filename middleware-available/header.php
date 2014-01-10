@@ -23,11 +23,18 @@ return function($request, $response = null) {
 
 		// get all headers that have been defined in application and feed back
 		// to my response
+		$headers = [ ];
+
 		foreach(headers_list() as $header) {
 			// since header is sent back as single string, we will need to tokenize
 			// the result
 			list($name, $value) = str_split(':', $header);
+
+			$headers[$name] = $value;
 		}
+
+		// write to response
+		$response->writeHead(null, $headers, true);
 		
 	}
 };
