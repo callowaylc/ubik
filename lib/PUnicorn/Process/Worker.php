@@ -27,7 +27,7 @@ class Worker extends AbstractProcess {
 		$middleware = [ ];
 
 		foreach(glob("$dir/*.php") as $file) {
-			$middleware[] = require_once $file;
+			$middleware[] = require $file;
 		}
 
 		// how we run middleware loop to service/application
