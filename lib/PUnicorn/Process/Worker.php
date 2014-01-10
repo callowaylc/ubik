@@ -39,7 +39,8 @@ class Worker extends AbstractProcess {
 		// load application and service request.. dont know how to do this yet
 		$response->writeHead(200, [
 			'Content-Type'   =>  'text/html',
-			'Worker-Process' =>  getmypid()
+			'Worker-Process' =>  getmypid(),
+			'Memory-Usage'   => memory_get_usage()
 		]);
 		$response->write('suck it');
 

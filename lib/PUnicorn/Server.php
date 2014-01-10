@@ -33,7 +33,7 @@ class Server {
 		// now start master process
 		try { 
 			$process = Process\Master::run(function($master) 
-				use ($loop, $http, $configuration) {
+				use ($loop, $http, $configuration, $socket) {
 				
 				// define generic handler for http request
 				for ($counter = 0; $counter < (int)$configuration->worker_processes; $counter++) {			
@@ -57,7 +57,8 @@ class Server {
 				});	
 
 				// finally run loop as master
-				//$loop->run();			
+				$socket->shutdown();
+				$loop->run();			
 
 			});
 
@@ -66,8 +67,6 @@ class Server {
 		} catch(\Exception $e) {
 			throws($e);
 		}
-
-		$loop->run();
 	}
 
 	public static function stop() {
