@@ -47,7 +47,7 @@ class Worker extends AbstractProcess {
 		chdir($configuration->root);
 
 		ob_start();
-		require $request->getPath();
+		require '.' . $request->getPath();
 		$content = ob_get_clean();
 
 		// signal our response code
