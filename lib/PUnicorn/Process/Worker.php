@@ -27,7 +27,7 @@ class Worker extends AbstractProcess {
 		$middleware = [ ];
 
 		foreach(glob("$dir/*.php") as $file) {
-			$middleware[] = require_once "$dir/$file";
+			$middleware[] = require_once $file;
 		}
 
 		// how we run middleware loop to service/application
@@ -37,6 +37,10 @@ class Worker extends AbstractProcess {
 		}
 
 		// load application and service request.. dont know how to do this yet
+		$response->writeHead(200, [
+			'Content-Type'   =>  'text/html',
+			'Worker-Process' =>  getmypid()
+		]);
 		$response->write('suck it');
 
 		// now reverse middleware and filter response through

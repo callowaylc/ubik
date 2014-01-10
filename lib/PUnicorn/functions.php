@@ -25,7 +25,7 @@ function fork(callable $lambda) {
 	$pid = pcntl_fork();
 	
 	// we are the child; execute/call lambda
-	if (is_null($pid)) {
+	if ($pid == 0) {
 		$lambda();
 	
 	// we have failed to fork

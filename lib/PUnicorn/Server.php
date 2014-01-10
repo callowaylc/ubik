@@ -39,10 +39,9 @@ class Server {
 				for ($counter = 0; $counter < (int)$configuration->worker_processes; $counter++) {			
 					// fork our process and define a motherfucking handler for request on worker
 					// process
-					$master->fork(function($worker) use ($http) {
+					$master->fork(function($worker) use ($http, $loop) {
 						// define handler for request
 						$http->on('request', function($request, $response) use ($worker) {
-							echo "on request";
 							$worker->service($request, $response);
 						});
 
@@ -58,7 +57,7 @@ class Server {
 				});	
 
 				// finally run loop as master
-				$loop->run();			
+				//$loop->run();			
 
 			});
 

@@ -11,4 +11,4 @@ return function($request, $response = null) {
 	} else {
 		
 	}
-}
+};
