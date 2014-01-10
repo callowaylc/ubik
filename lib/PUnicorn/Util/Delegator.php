@@ -22,7 +22,7 @@ class Delegator {
 
 		// finally return value
 		// @TODO can we use references here?
-		return $property->getValue();
+		return $property->getValue($this->delegated);
 	}
 
 	public function __set($name, $value) {
@@ -33,15 +33,15 @@ class Delegator {
 		$property->setAccessible(true);	
 
 		// finally return value
-		return $property->setValue($value);		
+		return $property->setValue($this->delegated, $value);		
 	}
 
 	/** If the method cannot be determined, lookup will pass to delegated object */
 	public function __call($name, $arguments) {
-		$method = new ReflectionMethod($this->delegated, $name);
+		$method = new \ReflectionMethod($this->delegated, $name);
 		$method->setAccessible(true);
 
-		return $method->invokeArgs($arguments);
+		return $method->invokeArgs($this->delegated, $arguments);
 	}
 
 	private $delegated;

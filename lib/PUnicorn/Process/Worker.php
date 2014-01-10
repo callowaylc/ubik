@@ -52,6 +52,9 @@ class Worker extends AbstractProcess {
 		}
 
 		// signal our response code 
+		header('Content-Type:123');
+		var_export(headers_list());
+
 		$response->writeHead(http_response_code(), [
 			'Content-Type'   =>  'text/html',
 			'Worker-Process' =>  getmypid(),

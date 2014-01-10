@@ -13,7 +13,7 @@ return function($request, $response = null) {
 
 		// for whatever reason php changes header name and places
 		// into $_SERVER global variable; do the same here
-		foreach($response->headers as $name => $value) {
+		foreach($request->getHeaders() as $name => $value) {
 			$name = 'HTTP_' . preg_replace('/-/', '_', $name);
 			$_SERVER[$name] = $value;
 		}
