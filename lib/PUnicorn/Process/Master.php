@@ -32,9 +32,13 @@ class Master extends AbstractProcess {
 	public function fork(callable $lambda) {
 		$process = new Worker;
 
-		$this->pids[] = PUnicorn\fork(function() use ($process, $lambda) {
+		$this->pids[] = ($pid = PUnicorn\fork(function() use ($process, $lambda) {
 			$lambda($process);
-		});
+		}));
+
+		// write fork pid to ./tmp/pids
+		`echo $pid >> ./tmp/pids/servers.pid`
+
 	}
 
 	private $pids = [ ]; // forked process ids
