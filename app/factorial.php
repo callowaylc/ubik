@@ -7,8 +7,7 @@ function factorial($number) {
   # can be used; cache will act as dict/hash data structure
   # using number as key
   if (!isset($GLOBALS['cache'])) {
-    $cache = &$GLOBALS['cache'];
-    $cache = [ ];
+    $GLOBALS['cache'] = [ ];
   }
 
   if ($number < 2) {
@@ -16,10 +15,11 @@ function factorial($number) {
   } else {
     # NOTE: we have to pass number as string so that it can
     # be interpreted as dict key as opposed to numerical index
-    if (!isset($cache["$number"])) {
-      $cache["$number"] = ( $number * factorial($number-1) );
+    if (!isset($GLOBALS['cache']["$number"])) {
+      echo "not set cache $number \n";
+      $GLOBALS['cache']["$number"] = ( $number * factorial($number-1) );
     }
 
-    return $cache["$number"];
+    return $GLOBALS['cache']["$number"];
   }
 }
