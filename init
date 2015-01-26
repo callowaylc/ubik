@@ -1,4 +1,3 @@
-#!/usr/bin/php-cgi -q
 <?php
 namespace PUnicorn;
 
@@ -8,27 +7,25 @@ namespace PUnicorn;
 // CONSTANTS ////////////////////////////////////////////////////////
 
 // REQUIRES  ////////////////////////////////////////////////////////
-
-require_once 'vendor/autoload.php';
+require_once './vendor/autoload.php';
 
 // MAIN      ////////////////////////////////////////////////////////
 
 // evaluate command line arguments
 // @TODO this doesnt work in php-cgi environment
 //$arguments = Util\Flag::parse(function($f) {
-//	$f->string('config', 'Path to configuration file');
+//  $f->string('config', 'Path to configuration file');
 //});
+
 
 // evaluate configuration 
 try { 
-	Configuration::evaluate($_REQUEST['config']);
+  Configuration::evaluate($_REQUEST['config']);
 
 } catch(\Exception $e) {
-	// @TODO add meaningful message
-	throws(null);
+  // @TODO add meaningful message
+  throws(null);
 } 
-
-
 
 // now that we have configuration set, we need to create
 // instance of server, which will be response for kicking

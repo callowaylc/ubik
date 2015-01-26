@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+# author: christian calloway callowaylc@gmail.com
+# description: reads pids and kills proccesses
+
+# constants
+
+PIDS = './tmp/pids/servers.pid'
+
+# main 
+
+( File.read( PIDS ).split "\n" ).each do | pid |
+  `kill -9 #{ pid }`
+end

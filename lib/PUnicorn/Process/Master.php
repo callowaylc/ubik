@@ -37,7 +37,7 @@ class Master extends AbstractProcess {
 		}));
 
 		// write fork pid to ./tmp/pids
-		`echo $pid >> ./tmp/pids/servers.pid`
+		`echo $pid >> ./tmp/pids/servers.pid`;
 
 	}
 

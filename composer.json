@@ -1,8 +1,8 @@
 {
 
     "require": {
-        //"monolog/monolog": "1.0.*"
-			 "react/react": "0.3.*",
+       "monolog/monolog": "1.12.*@dev",
+			 "react/react": "0.5.*@dev",
 			 "donatj/flags": "dev-master"
 
     },
