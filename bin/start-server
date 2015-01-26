@@ -3,7 +3,7 @@
 # description: kicks off punicorn master processs
 
 # start process, redirect and attach nohup policy
-php-cgi ./init config=./web-root/config/punicorn.php  &
+nohup php-cgi ./init config=./web-root/config/punicorn.php 2>&1 &
 
 # copy master mid to process list
 echo $! > ./tmp/pids/servers.pid
