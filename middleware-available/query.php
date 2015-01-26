@@ -18,8 +18,6 @@ return function($request, $response = null) {
 
 	// process response
 	} else {
-
-
 		
 	}
 };

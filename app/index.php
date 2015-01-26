@@ -4,8 +4,13 @@
 
 $pid = getmypid();
 
-if (!isset($counter)) {
-  $counter = 0;
-}
+# set global counter if this is the first request to process
+$counter = &$GLOBALS['counter'];
+$counter += 1;
+#!isset($GLOBALS['counter']) && $GLOBALS['counter'] = 0;
+
+# iterate counter 
+#$counter += 1;
+
 
 echo "pid: $pid counter: $counter"; 
