@@ -21,8 +21,8 @@ class Worker extends AbstractProcess {
 		// determine middleware being employed - whether local
 		// to web root or defined globally in server
 		(
-			is_dir($dir = $configuration->root   . '/middleware-enabled') ||
-			is_dir($dir = $_ENV['PUNICORN_HOME'] . '/middleware-enabled')
+			is_dir($dir = $configuration->root    . '/middleware-enabled') ||
+			is_dir($dir = getenv('PUNICORN_HOME') . '/middleware-enabled')
 
 		) || PUnicorn\throws(
 			'Failed to find middleware-enabled directory'
@@ -46,8 +46,9 @@ class Worker extends AbstractProcess {
 		// path and requring file as described in request path
 		chdir($configuration->root);
 
+
 		ob_start();
-		require '.' . $request->getPath();
+		require './' . $request->getPath();
 		$content = ob_get_clean();
 
 		// signal our response code

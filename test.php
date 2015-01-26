@@ -1,3 +1,4 @@
 <?php
 
-var_export($_REQUEST);
+echo getenv('PUNICORN_HOME'); exit;
+//var_export($_REQUEST);
