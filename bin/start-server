@@ -32,7 +32,6 @@ try {
 // @TODO this is hacky, needs to be abstracted
 $pid = getmypid(); 
 `echo '$pid' > ./tmp/pids/servers.pid`; 
-exit;
 
 // now that we have configuration set, we need to create
 // instance of server, which will be response for kicking
