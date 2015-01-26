@@ -16,7 +16,6 @@ function factorial($number) {
     # NOTE: we have to pass number as string so that it can
     # be interpreted as dict key as opposed to numerical index
     if (!isset($GLOBALS['cache']["$number"])) {
-      echo "not set cache $number \n";
       $GLOBALS['cache']["$number"] = ( $number * factorial($number-1) );
     }
 
