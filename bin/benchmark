@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+# author: christian calloway callowaylc@gmail.com
+# description: retrieve frequency of process id being used by punicorn
+
+# requires
+require 'json'
+
+# methods
+
+def port
+  ARGV[0]
+end
+
+# main
+
+raise 'failed to pass port' unless ARGV[0]
+
+# bind current timestamp; ugly method for determining time taken to run test 
+start = Time.now
+
+# perform n iterations and record responses from punicorn
+responses = { } 
+
+1000.times do
+  pid = ( `curl -s localhost:#{ port }/index.php` ).match( /[0-9]+/ )[0]
+  
+  # initialize key on responses hash if not set and increment by one 
+  responses[pid] ||= 0
+  responses[pid]  += 1
+end
+
+puts <<-eof
+  port: #{ port }
+  request distribution - pid:number: #{ responses.to_json }
+  time: #{ Time.now - start }
+eof
+
