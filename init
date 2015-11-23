@@ -1,4 +1,4 @@
-#!/usr/bin/php-cgi -q
+#!/usr/bin/env php-cgi -q
 <?php
 namespace PUnicorn;
 
@@ -13,6 +13,8 @@ require_once 'vendor/autoload.php';
 
 // MAIN      ////////////////////////////////////////////////////////
 
+Logger::log( 'initializing php.io' );
+
 // evaluate command line arguments
 // @TODO this doesnt work in php-cgi environment
 //$arguments = Util\Flag::parse(function($f) {
@@ -21,16 +23,14 @@ require_once 'vendor/autoload.php';
 
 // evaluate configuration 
 try { 
-	Configuration::evaluate($_REQUEST['config']);
+	Configuration::evaluate( './config/application.php' );
 
 } catch(\Exception $e) {
 	// @TODO add meaningful message
-	throws(null);
+	throws( $e );
 } 
-
-
 
 // now that we have configuration set, we need to create
 // instance of server, which will be response for kicking
 // off master/worker processes
-Server::start();
+@Server::start();

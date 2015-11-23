@@ -2,6 +2,7 @@
 namespace PUnicorn\Process;
 use \PUnicorn;
 use \PUnicorn\HTTP;
+use \PUnicorn\Logger;
 
 /** Represents a punicorn child process
  **/
@@ -9,6 +10,12 @@ class Worker extends AbstractProcess {
 
 	/** Responsible for servicing request */
 	public function service($request, $response) {
+		Logger::log(sprintf(
+			'Request %s:%s %s', 
+			$request->getMethod(), 
+			$request->getPath()
+		));
+
 
 		// get config instances
 		$configuration = PUnicorn\Configuration::singleton();
@@ -20,20 +27,17 @@ class Worker extends AbstractProcess {
 
 		// determine middleware being employed - whether local
 		// to web root or defined globally in server
-		(
-			is_dir($dir = $configuration->root   . '/middleware-enabled') ||
-			is_dir($dir = $_ENV['PUNICORN_HOME'] . '/middleware-enabled')
-
-		) || PUnicorn\throws(
-			'Failed to find middleware-enabled directory'
-		);
-
-		// get all middleware components, require them and iterate
-		// through them
 		$middleware = [ ];
 
-		foreach(glob("$dir/*.php") as $file) {
-			$middleware[] = require $file;
+		if (
+			is_dir($dir = $configuration->root   . '/middleware-enabled') ||
+			(isset($_ENV['PUNICORN_HOME']) && is_dir($dir = $_ENV['PUNICORN_HOME'] . '/middleware-enabled'))
+		) {
+
+			foreach(glob("$dir/*.php") as $file) {
+				Logger::log( 'registering middleware: ' . $file );
+				$middleware[] = require $file;
+			}
 		}
 
 		// how we run middleware loop to service/application
@@ -56,8 +60,6 @@ class Worker extends AbstractProcess {
 		foreach(array_reverse($middleware) as $lambda) {
 			$lambda($request, $response);
 		}
-
-
 
 		$response->writeHead(http_response_code(), [
 			'Content-Type'   =>  'text/html',
