@@ -11,7 +11,7 @@ class Worker extends AbstractProcess {
 	/** Responsible for servicing request */
 	public function service($request, $response) {
 		Logger::log(sprintf(
-			'Request %s:%s %s', 
+			'Request %s:%s', 
 			$request->getMethod(), 
 			$request->getPath()
 		));
