@@ -1,6 +1,6 @@
 server {  
   listen 80;
-  server_name          stateful.wordpress.com;
+  server_name stateful.wordpress.com;
   
   access_log /var/log/nginx/access-$hostname.log;
   error_log /var/log/nginx/error-$hostname.log;
