@@ -11,4 +11,4 @@ $this->health_check_interval(60);
 
 # set web root
 # root "/var/www/punicorn"
-$this->root("/tmp/php.io");
+$this->root("/application/ubik");

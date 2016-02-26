@@ -1,5 +1,6 @@
 <?php // @author Christian Calloway callowaylc@gmail */
 namespace PUnicorn;
+error_reporting(true);
 
 /** Responsible for processing request/response headers in 
  ** mod_php fashion 

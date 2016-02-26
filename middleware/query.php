@@ -2,7 +2,7 @@
 namespace PUnicorn;
 
 use \PUnicorn\Logger;
-
+error_reporting(true);
 /** Responsible for adding query arguments to php superglobal containers
  ** intended for query arguments
  **/

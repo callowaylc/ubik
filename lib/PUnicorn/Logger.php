@@ -16,7 +16,7 @@ class Logger {
     if (!isset(static::$instance)) {
       static::$instance = new Monolog\Logger( 'php.io' );
       static::$instance->pushHandler(new StreamHandler(
-        '/tmp/php.io/application.log', Monolog\Logger::INFO
+        '/application/ubik/application.log', Monolog\Logger::INFO
       ));
     }
 

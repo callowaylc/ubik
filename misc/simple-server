@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+$server = stream_socket_server(
+  "tcp://127.0.0.1:1337", $errno, $errorMessage
+);
+
+if ($server === false) {
+    throw new UnexpectedValueException("Could not bind to socket: $errorMessage");
+}
+
+
+while ( true ) {
+    $client = @stream_socket_accept($server);
+    $buffer = '';
+
+    if ($client) {
+        while(trim($chunk = stream_socket_recvfrom( $client, 10024 )) !== '') {
+          $buffer .= $chunk;
+          echo "here\n";
+                  fputs( $client, $buffer );
+         
+          //echo $buffer;
+          file_put_contents( '/tmp/cgi-looks-like-this', $buffer, FILE_APPEND );
+        }
+        //echo $buffer;
+        fputs( $client, $buffer );
+        fclose($client);  
+    }
+}

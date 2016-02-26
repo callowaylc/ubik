@@ -3,6 +3,7 @@ namespace PUnicorn\Process;
 use \PUnicorn;
 use \PUnicorn\HTTP;
 use \PUnicorn\Logger;
+error_reporting(true);
 
 /** Represents a punicorn child process
  **/
@@ -29,6 +30,9 @@ class Worker extends AbstractProcess {
 		// to web root or defined globally in server
 		$middleware = [ ];
 
+		Logger::log( 'configuration root: ' . $configuration->root );
+		Logger::log( 'requested resource: ' . $request->getPath() );
+
 		if (
 			is_dir($dir = $configuration->root   . '/middleware-enabled') ||
 			(isset($_ENV['PUNICORN_HOME']) && is_dir($dir = $_ENV['PUNICORN_HOME'] . '/middleware-enabled'))
@@ -46,15 +50,21 @@ class Worker extends AbstractProcess {
 			$lambda($request);
 		}
 
+
+		Logger::log("here");
+
+
 		// run application which involves ensuring we are root
 		// path and requring file as described in request path
 		chdir($configuration->root);
 
 		ob_start();
-		require '.' . $request->getPath();
+		require $configuration->root . '/' . $request->getPath();
 		$content = ob_get_clean();
 
 		// signal our response code
+		Logger::log( 'requested ' . $configuration->root . '/' . $request->getPath());
+
 
 		// now reverse middleware and filter response through
 		foreach(array_reverse($middleware) as $lambda) {

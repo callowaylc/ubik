@@ -42,6 +42,8 @@ class Server {
 					$master->fork(function($worker) use ($http, $loop) {
 						// define handler for request
 						$http->on('request', function($request, $response) use ($worker) {
+							Logger::log( 'request' );
+
 							$worker->service($request, $response);
 						});
 

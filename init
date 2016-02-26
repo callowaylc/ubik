@@ -13,6 +13,7 @@ require_once 'vendor/autoload.php';
 
 // MAIN      ////////////////////////////////////////////////////////
 
+error_reporting(true);
 Logger::log( 'initializing php.io' );
 
 // evaluate command line arguments
