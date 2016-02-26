@@ -11,7 +11,6 @@ return function($request, $response = null) {
 
 	// process request
 	if (is_null($response)) {
-
 		// for whatever reason php changes header name and places
 		// into $_SERVER global variable; do the same here
 		foreach($request->getHeaders() as $name => $value) {
