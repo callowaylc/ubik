@@ -11,18 +11,38 @@ return function($request, $response = null) {
 
   // process request
   if (is_null($response)) {
-    // get initial GLOBALS state
+    // reset globals to state prior to first request; remove anything that
+    // has been introduced from included application
+
+    // get initial GLOBALS state keys
     $keys = State::persist(__FILE__ . __LINE__, function() {
       return array_keys($GLOBALS);
     }); 
 
-    foreach ($GLOBALS as $key => $name) {
-      if(!in_array($key, $keys)) {
-        unset($GLOBALS[$key]);
-      }
+    foreach(array_diff(array_keys($GLOBALS), $keys) as $key) {
+      unset($GLOBALS[$key]);
     }
 
-    Logger::log(var_export(array_keys($GLOBALS), true));
+    // reset php "horizontal" global (class static variables) to state
+    // prior to first request
+    $classes = State::persist(__FILE__ . __LINE__, function() {
+      return get_declared_classes();
+    });
+
+    Logger::log(var_export(array_diff(get_declared_classes(), $classes), true));
+
+    foreach (array_diff(get_declared_classes(), $classes) as $class) {
+      // copy to /tmp and load 
+      //$reflection = new \ReflectionClass($class);
+      //copy(R, dest);
+      //Logger::log(var_export($reflection->getDefaultProperties(), true));
+
+      //foreach($reflection->getDefaultProperties() as $property) {
+      //
+      //}
+    }
+
+
 
 
     // reset state of static properties
